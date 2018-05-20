@@ -17,6 +17,7 @@ const Lazyframe = () => {
     debounce: 250,
     lazyload: true,
     initinview: false,
+    onClick: null,
     onLoad: (l) => {},
     onAppend: (l) => {},
     onThumbnailLoad: (img) => {}
@@ -115,6 +116,12 @@ const Lazyframe = () => {
     };
 
     lazyframe.el.addEventListener('click', () => {
+      if (lazyframe.settings.onClick) {
+        if (!lazyframe.settings.onClick.call(this, el)) {
+          return;
+        }
+      }
+
       lazyframe.el.appendChild(lazyframe.iframe);
 
       const iframe = el.querySelectorAll('iframe');
